@@ -7,10 +7,10 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: {
-        swSrc: 'src/sw.js'
-      }
-    }
+        swSrc: 'src/sw.js',
+      },
+    },
   ],
   globalScript: 'src/global/app.ts',
-  globalStyle: 'src/global/app.css'
+  globalStyle: 'src/global/app.css',
 };

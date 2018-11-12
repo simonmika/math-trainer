@@ -1,16 +1,17 @@
 import { Component, Prop, State } from '@stencil/core';
+
 import { sayHello } from '../../helpers/utils';
 
 @Component({
   tag: 'app-profile',
-  styleUrl: 'app-profile.css'
+  styleUrl: 'app-profile.css',
 })
 export class AppProfile {
   @State() state = false;
-  @Prop() name: string;
+  @Prop() name: string | undefined;
 
   formattedName(): string {
-    if (this.name) {
+    if (this.name !== undefined) {
       return this.name.substr(0, 1).toUpperCase() + this.name.substr(1).toLowerCase();
     }
     return '';
@@ -40,7 +41,7 @@ export class AppProfile {
             onIonChange={ev => (this.state = ev.detail.checked)}
           />
         </ion-item>
-      </ion-content>
+      </ion-content>,
     ];
   }
 }

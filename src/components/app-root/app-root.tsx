@@ -2,7 +2,7 @@ import { Component, Listen, Prop } from '@stencil/core';
 
 @Component({
   tag: 'app-root',
-  styleUrl: 'app-root.css'
+  styleUrl: 'app-root.css',
 })
 export class AppRoot {
 
@@ -22,7 +22,7 @@ export class AppRoot {
     const toast = await this.toastCtrl.create({
       message: 'New version available',
       showCloseButton: true,
-      closeButtonText: 'Reload'
+      closeButtonText: 'Reload',
     });
     await toast.present();
     await toast.onWillDismiss();

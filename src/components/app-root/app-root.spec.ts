@@ -12,21 +12,21 @@ describe('app-root', () => {
       appRoot = new AppRoot();
       mockToast = {
         present: jest.fn().mockReturnValue(Promise.resolve()),
-        onWillDismiss: jest.fn().mockReturnValue(Promise.resolve())
+        onWillDismiss: jest.fn().mockReturnValue(Promise.resolve()),
       };
       appRoot.toastCtrl = {
-        create: jest.fn().mockReturnValue(Promise.resolve(mockToast))
+        create: jest.fn().mockReturnValue(Promise.resolve(mockToast)),
       } as any;
       window.location.reload = jest.fn();
     });
 
-    it('creates a new toast', () => {
-      appRoot.onSWUpdate();
+    it('creates a new toast', async () => {
+      await appRoot.onSWUpdate();
       expect(appRoot.toastCtrl.create).toHaveBeenCalledTimes(1);
       expect(appRoot.toastCtrl.create).toHaveBeenCalledWith({
         message: 'New version available',
         showCloseButton: true,
-        closeButtonText: 'Reload'
+        closeButtonText: 'Reload',
       });
     });
 
