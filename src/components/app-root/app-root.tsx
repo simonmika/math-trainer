@@ -6,7 +6,7 @@ import { Component, Listen, Prop } from '@stencil/core';
 })
 export class AppRoot {
 
-  @Prop({ connect: 'ion-toast-controller' }) toastCtrl: HTMLIonToastControllerElement;
+  @Prop({ connect: 'ion-toast-controller' }) toastCtrl: HTMLIonToastControllerElement | undefined;
 
   /**
    * Handle service worker updates correctly.
@@ -19,13 +19,15 @@ export class AppRoot {
    */
   @Listen('window:swUpdate')
   async onSWUpdate() {
-    const toast = await this.toastCtrl.create({
-      message: 'New version available',
-      showCloseButton: true,
-      closeButtonText: 'Reload',
-    });
-    await toast.present();
-    await toast.onWillDismiss();
+    if (this.toastCtrl) {
+      const toast = await this.toastCtrl.create({
+        message: 'New version available',
+        showCloseButton: true,
+        closeButtonText: 'Reload',
+      });
+      await toast.present();
+      await toast.onWillDismiss();
+    }
     window.location.reload();
   }
 

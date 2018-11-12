@@ -2,7 +2,14 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
-    "strictNullChecks": true,
+    "noImplicitAny": true,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"strict": true,
+		"alwaysStrict": true,
+		"strictNullChecks": true,
+		"forceConsistentCasingInFileNames": true,
+    "noImplicitThis": true,
     "declaration": false,
     "experimentalDecorators": true,
     "lib": [
