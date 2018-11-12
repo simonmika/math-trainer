@@ -1,8 +1,8 @@
-import { Component } from '@stencil/core'
+import { Component } from "@stencil/core"
 
 @Component({
-	tag: 'app-home',
-	styleUrl: 'app-home.css',
+	tag: "app-home",
+	styleUrl: "app-home.css",
 })
 export class AppHome {
 

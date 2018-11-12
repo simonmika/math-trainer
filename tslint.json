@@ -1,8 +1,10 @@
 {
   "extends": "tslint-ionic-rules/strict",
   "rules": {
-    "curly": false,
+    "curly": [ false, "never" ],
+    "indent": [ true, "tabs" ],
+    "quotemark": [ true, "double"],
     "semicolon": [ true, "never"],
-    "indent": [ true, "tabs" ]
+    "triple-equals": false
   }
 }

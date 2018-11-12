@@ -1,12 +1,12 @@
-import { Component, Listen, Prop } from '@stencil/core'
+import { Component, Listen, Prop } from "@stencil/core"
 
 @Component({
-	tag: 'app-root',
-	styleUrl: 'app-root.css',
+	tag: "app-root",
+	styleUrl: "app-root.css",
 })
 export class AppRoot {
 
-	@Prop({ connect: 'ion-toast-controller' }) toastCtrl: HTMLIonToastControllerElement | undefined
+	@Prop({ connect: "ion-toast-controller" }) toastCtrl: HTMLIonToastControllerElement | undefined
 
 	/**
 	 * Handle service worker updates correctly.
@@ -17,13 +17,13 @@ export class AppRoot {
 	 * so that the new service worker can take over
 	 * and serve the fresh content
 	 */
-	@Listen('window:swUpdate')
+	@Listen("window:swUpdate")
 	async onSWUpdate() {
 		if (this.toastCtrl) {
 			const toast = await this.toastCtrl.create({
-				message: 'New version available',
+				message: "New version available",
 				showCloseButton: true,
-				closeButtonText: 'Reload',
+				closeButtonText: "Reload",
 			})
 			await toast.present()
 			await toast.onWillDismiss()

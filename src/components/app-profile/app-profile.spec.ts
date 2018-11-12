@@ -1,32 +1,32 @@
-import { AppProfile } from './app-profile'
+import { AppProfile } from "./app-profile"
 
-describe('app-profile', () => {
-	it('builds', () => {
+describe("app-profile", () => {
+	it("builds", () => {
 		expect(new AppProfile()).toBeTruthy()
 	})
 
-	describe('normalization', () => {
-		it('returns a blank string if the name is undefined', () => {
+	describe("normalization", () => {
+		it("returns a blank string if the name is undefined", () => {
 			const component = new AppProfile()
-			expect(component.formattedName()).toEqual('')
+			expect(component.formattedName()).toEqual("")
 		})
 
-		it('capitalizes the first letter', () => {
+		it("capitalizes the first letter", () => {
 			const component = new AppProfile()
-			component.name = 'quincy'
-			expect(component.formattedName()).toEqual('Quincy')
+			component.name = "quincy"
+			expect(component.formattedName()).toEqual("Quincy")
 		})
 
-		it('lower-cases the following letters', () => {
+		it("lower-cases the following letters", () => {
 			const component = new AppProfile()
-			component.name = 'JOSEPH'
-			expect(component.formattedName()).toEqual('Joseph')
+			component.name = "JOSEPH"
+			expect(component.formattedName()).toEqual("Joseph")
 		})
 
-		it('handles single letter names', () => {
+		it("handles single letter names", () => {
 			const component = new AppProfile()
-			component.name = 'q'
-			expect(component.formattedName()).toEqual('Q')
+			component.name = "q"
+			expect(component.formattedName()).toEqual("Q")
 		})
 	})
 })

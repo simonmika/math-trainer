@@ -1,11 +1,11 @@
-import { AppRoot } from './app-root'
+import { AppRoot } from "./app-root"
 
-describe('app-root', () => {
-	it('builds', () => {
+describe("app-root", () => {
+	it("builds", () => {
 		expect(new AppRoot()).toBeTruthy()
 	})
 
-	describe('onSWUpdate', () => {
+	describe("onSWUpdate", () => {
 		let appRoot: AppRoot
 		let mockToast: any
 		beforeEach(() => {
@@ -20,25 +20,25 @@ describe('app-root', () => {
 			window.location.reload = jest.fn()
 		})
 
-		it('creates a new toast', async () => {
+		it("creates a new toast", async () => {
 			await appRoot.onSWUpdate()
 			expect(appRoot.toastCtrl)
 			if (appRoot.toastCtrl) {
 				expect(appRoot.toastCtrl.create).toHaveBeenCalledTimes(1)
 				expect(appRoot.toastCtrl.create).toHaveBeenCalledWith({
-					message: 'New version available',
+					message: "New version available",
 					showCloseButton: true,
-					closeButtonText: 'Reload',
+					closeButtonText: "Reload",
 				})
 			}
 		})
 
-		it('presents the toast', async () => {
+		it("presents the toast", async () => {
 			await appRoot.onSWUpdate()
 			expect(mockToast.present).toHaveReturnedTimes(1)
 		})
 
-		it('reloads the app', async () => {
+		it("reloads the app", async () => {
 			await appRoot.onSWUpdate()
 			expect(window.location.reload).toHaveReturnedTimes(1)
 		})

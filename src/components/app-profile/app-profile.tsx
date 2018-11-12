@@ -1,10 +1,10 @@
-import { Component, Prop, State } from '@stencil/core'
+import { Component, Prop, State } from "@stencil/core"
 
-import { sayHello } from '../../helpers/utils'
+import { sayHello } from "../../helpers/utils"
 
 @Component({
-	tag: 'app-profile',
-	styleUrl: 'app-profile.css',
+	tag: "app-profile",
+	styleUrl: "app-profile.css",
 })
 export class AppProfile {
 	@State() state = false
@@ -14,7 +14,7 @@ export class AppProfile {
 		if (this.name !== undefined) {
 			return this.name.substr(0, 1).toUpperCase() + this.name.substr(1).toLowerCase()
 		}
-		return ''
+		return ""
 	}
 
 	render() {
