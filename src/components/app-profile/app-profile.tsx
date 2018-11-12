@@ -11,10 +11,7 @@ export class AppProfile {
 	@Prop() name: string | undefined
 
 	formattedName(): string {
-		if (this.name !== undefined) {
-			return this.name.substr(0, 1).toUpperCase() + this.name.substr(1).toLowerCase()
-		}
-		return ""
+		return this.name ? this.name.substr(0, 1).toUpperCase() + this.name.substr(1).toLowerCase() : ""
 	}
 
 	render() {
