@@ -1,6 +1,6 @@
 {
-  "name": "Ionic PWA Toolkit",
-  "short_name": "Ionic PWA",
+  "name": "Math Trainer",
+  "short_name": "Math Trainer",
   "start_url": "/",
   "display": "standalone",
   "icons": [{

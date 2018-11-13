@@ -1,12 +1,12 @@
 {
-  "name": "@ionic/pwa-toolkit",
+  "name": "math-trainer",
   "private": true,
   "version": "0.0.1",
-  "author": "Ionic Team",
-  "description": "Ionic PWA Toolkit",
-  "license": "MIT",
+  "author": "Simon Mika <simon@mika.se>",
+  "description": "Math Trainer",
+  "license": "AGPLv3.0-or-later",
   "files": [
-    "dist/"
+    "www/"
   ],
   "scripts": {
     "build": "stencil build",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "tslint": "^5.11.0",
-    "tslint-ionic-rules": "0.0.19"
+    "tslint-ionic-rules": "0.0.19",
+    "workbox-build": "3.4.1"
   }
 }
