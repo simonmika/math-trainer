@@ -8,10 +8,13 @@ import { Lesson, Task } from "../../model"
 })
 export class MtPractice {
 	@State() current = 0
+	@State() error: string | undefined
 	@State() lesson: Lesson | undefined
 	@Prop() category: string | undefined
 	@Prop() name: string | undefined
+	answers: number[][] | undefined
 
+	toastController!: HTMLIonToastControllerElement
 	input!: HTMLIonInputElement
 	handleSubmit = (ev: Event) => {
 		ev.preventDefault()
@@ -21,15 +24,34 @@ export class MtPractice {
 			this.verify(answer, correct)
 		}
 	}
-
 	componentWillLoad() {
-		return fetch("/api/lessons/multiplication/full/index.json").then(response => response.json()).then(data => { this.lesson = data })
+		return fetch("/api/lessons/multiplication/full/index.json").then(response => response.json()).then(data => {
+			this.lesson = data as Lesson | undefined
+			if (this.lesson)
+				this.answers = this.lesson.tasks.map(_ => [])
+			this.current = this.next()
+		})
 	}
-	private verify(answer: number | undefined, correct: number) {
-		if (answer == correct && this.lesson)
-			this.current = (this.current + 1) % this.lesson.tasks.length
-		else
-			alert(correct)
+	private async verify(answer: number | undefined, correct: number) {
+		if (this.lesson && this.answers) {
+			this.answers[this.current].push(answer || Number.NaN)
+			if (answer == correct)
+				this.current = this.next()
+			else {
+				await this.toastController.componentOnReady()
+				const element = await this.toastController.create({
+					message: this.lesson.tasks[this.current][0].replace("*", "×").replace("_", this.lesson.tasks[this.current][1].toString()),
+					position: "bottom",
+					duration: 3000,
+					color: "danger",
+				})
+				await element.present()
+				this.input.value = ""
+			}
+		}
+	}
+	private next(): number {
+		return this.lesson ? (this.current + 1) % this.lesson.tasks.length : 0
 	}
 	render() {
 		return this.lesson ? [
@@ -54,6 +76,7 @@ export class MtPractice {
 					<ion-button href="#" type="submit"><ion-icon name="arrow-round-forward"></ion-icon></ion-button>
 				</ion-item>
 			</form>,
+			<ion-toast-controller ref={(element: HTMLElement | undefined) => this.toastController = element as HTMLIonToastControllerElement}></ion-toast-controller>,
 		] : [ <ion-loading></ion-loading> ]
 	}
 	private renderTaskItem(item: string) {
@@ -62,7 +85,7 @@ export class MtPractice {
 			case "-": return <ion-label>&minus;</ion-label>
 			case "*": return <ion-label>&times;</ion-label>
 			case "/": return <ion-label>&divide;</ion-label>
-			case "_": return <ion-input type="number" autofocus value="0" inputMode="numeric" onKeyUp={ e => { if (e.code == "Enter") this.handleSubmit(e) } } ref={(element: HTMLElement | undefined) => this.input = element as HTMLIonInputElement}></ion-input>
+			case "_": return <ion-input type="number" autofocus value="" inputMode="numeric" onKeyUp={ e => { if (e.code == "Enter") this.handleSubmit(e) } } ref={(element: HTMLElement | undefined) => this.input = element as HTMLIonInputElement}></ion-input>
 			default: return <ion-label>{item}</ion-label>
 		}
 	}
