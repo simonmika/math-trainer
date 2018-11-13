@@ -62,7 +62,7 @@ export class MtPractice {
 			case "-": return <ion-label>&minus;</ion-label>
 			case "*": return <ion-label>&times;</ion-label>
 			case "/": return <ion-label>&divide;</ion-label>
-			case "_": return <ion-input type="number" autofocus inputmode="numeric" value="" ref={(element: HTMLElement | undefined) => this.input = element as HTMLIonInputElement}></ion-input>
+			case "_": return <ion-input type="number" autofocus value="0" inputMode="numeric" onKeyUp={ e => { if (e.code == "Enter") this.handleSubmit(e) } } ref={(element: HTMLElement | undefined) => this.input = element as HTMLIonInputElement}></ion-input>
 			default: return <ion-label>{item}</ion-label>
 		}
 	}
