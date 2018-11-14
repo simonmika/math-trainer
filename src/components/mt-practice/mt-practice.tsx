@@ -1,6 +1,6 @@
-import { Component, Prop, State } from "@stencil/core"
+import { Component, Listen, Prop, State } from "@stencil/core"
 
-import { Lesson, Task } from "../../model"
+import { Lesson } from "../../model"
 
 @Component({
 	tag: "mt-practice",
@@ -13,17 +13,8 @@ export class MtPractice {
 	@Prop() category: string | undefined
 	@Prop() name: string | undefined
 	answers: number[][] | undefined
-
 	toastController!: HTMLIonToastControllerElement
-	input!: HTMLIonInputElement
-	handleSubmit = (ev: Event) => {
-		ev.preventDefault()
-		if (this.lesson && this.input) {
-			const answer = this.input.value != undefined ? parseFloat(this.input.value) : undefined
-			const correct = this.lesson.tasks[this.current][1]
-			this.verify(answer, correct)
-		}
-	}
+
 	componentWillLoad() {
 		return fetch("/api/lessons/multiplication/full/index.json").then(response => response.json()).then(data => {
 			this.lesson = data as Lesson | undefined
@@ -31,6 +22,13 @@ export class MtPractice {
 				this.answers = this.lesson.tasks.map(_ => [])
 			this.current = this.next()
 		})
+	}
+	@Listen("answered")
+	answeredHandler(event: CustomEvent<number>) {
+		if (this.lesson) {
+			const correct = this.lesson.tasks[this.current][1]
+			this.verify(event.detail, correct)
+		}
 	}
 	private async verify(answer: number | undefined, correct: number) {
 		if (this.lesson && this.answers) {
@@ -46,7 +44,6 @@ export class MtPractice {
 					color: "danger",
 				})
 				await element.present()
-				this.input.value = ""
 			}
 		}
 	}
@@ -64,30 +61,9 @@ export class MtPractice {
 				</ion-toolbar>
 			</ion-header>,
 			<ion-content padding>
-				{this.renderTask(this.lesson.tasks[this.current])}
+				<mt-practice-task task={this.lesson.tasks[this.current][0]}></mt-practice-task>
+				<ion-toast-controller ref={(element: HTMLElement | undefined) => this.toastController = element as HTMLIonToastControllerElement}></ion-toast-controller>,
 			</ion-content>,
 		] : [ <ion-loading></ion-loading> ]
 	}
-	renderTask(task: Task) {
-		return task ? [
-			<form onSubmit={this.handleSubmit}>
-				<ion-item>
-					{task[0].split(/\s+/).map(item => this.renderTaskItem(item))}
-					<ion-button href="#" type="submit"><ion-icon name="arrow-round-forward"></ion-icon></ion-button>
-				</ion-item>
-			</form>,
-			<ion-toast-controller ref={(element: HTMLElement | undefined) => this.toastController = element as HTMLIonToastControllerElement}></ion-toast-controller>,
-		] : [ <ion-loading></ion-loading> ]
-	}
-	private renderTaskItem(item: string) {
-		switch (item) {
-			case "+": return <ion-label>&plus;</ion-label>
-			case "-": return <ion-label>&minus;</ion-label>
-			case "*": return <ion-label>&times;</ion-label>
-			case "/": return <ion-label>&divide;</ion-label>
-			case "_": return <ion-input type="number" autofocus value="" inputMode="numeric" onKeyUp={ e => { if (e.code == "Enter") this.handleSubmit(e) } } ref={(element: HTMLElement | undefined) => this.input = element as HTMLIonInputElement}></ion-input>
-			default: return <ion-label>{item}</ion-label>
-		}
-	}
-
 }
