@@ -1,44 +1,36 @@
 import { Component, Listen, Prop, State } from "@stencil/core"
 
-import { Lesson } from "../../model"
+import * as state from "../../state"
 
 @Component({
 	tag: "mt-practice",
 	styleUrl: "mt-practice.css",
 })
 export class MtPractice {
-	@State() current = 0
-	@State() error: string | undefined
-	@State() lesson: Lesson | undefined
+	@State() lesson: state.Lesson = new state.Lesson(next => this.lesson = next)
 	@Prop() category: string | undefined
 	@Prop() name: string | undefined
-	answers: number[][] | undefined
 	toastController!: HTMLIonToastControllerElement
 
 	componentWillLoad() {
-		return fetch("/api/lessons/multiplication/full/index.json").then(response => response.json()).then(data => {
-			this.lesson = data as Lesson | undefined
-			if (this.lesson)
-				this.answers = this.lesson.tasks.map(_ => [])
-			this.current = this.next()
-		})
+		return this.lesson.load("/api/lessons/multiplication/full/index.json")
 	}
 	@Listen("answered")
 	answeredHandler(event: CustomEvent<number>) {
 		if (this.lesson) {
-			const correct = this.lesson.tasks[this.current][1]
+			const correct = this.lesson.current.correct
 			this.verify(event.detail, correct)
 		}
 	}
 	private async verify(answer: number | undefined, correct: number) {
-		if (this.lesson && this.answers) {
-			this.answers[this.current].push(answer || Number.NaN)
+		if (this.lesson) {
+			this.lesson.current.answers.push(answer || Number.NaN)
 			if (answer == correct)
-				this.current = this.next()
+				this.lesson.next()
 			else {
 				await this.toastController.componentOnReady()
 				const element = await this.toastController.create({
-					message: this.lesson.tasks[this.current][0].replace("*", "×").replace("_", this.lesson.tasks[this.current][1].toString()),
+					message: this.lesson.current.answered,
 					position: "bottom",
 					duration: 3000,
 					color: "danger",
@@ -46,9 +38,6 @@ export class MtPractice {
 				await element.present()
 			}
 		}
-	}
-	private next(): number {
-		return this.lesson ? (this.current + 1) % this.lesson.tasks.length : 0
 	}
 	render() {
 		return this.lesson ? [
@@ -61,7 +50,7 @@ export class MtPractice {
 				</ion-toolbar>
 			</ion-header>,
 			<ion-content padding>
-				<mt-practice-task task={this.lesson.tasks[this.current][0]}></mt-practice-task>
+				<mt-practice-task task={this.lesson.current.task}></mt-practice-task>
 				<ion-toast-controller ref={(element: HTMLElement | undefined) => this.toastController = element as HTMLIonToastControllerElement}></ion-toast-controller>,
 			</ion-content>,
 		] : [ <ion-loading></ion-loading> ]
