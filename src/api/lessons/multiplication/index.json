@@ -1,0 +1,14 @@
+[
+	{ "name": "up to 10", "url": "./upto10" },
+	{ "name": "only 0", "url": "./only00" },
+	{ "name": "only 1", "url": "./only01" },
+	{ "name": "only 2", "url": "./only02" },
+	{ "name": "only 3", "url": "./only03" },
+	{ "name": "only 4", "url": "./only04" },
+	{ "name": "only 5", "url": "./only05" },
+	{ "name": "only 6", "url": "./only06" },
+	{ "name": "only 7", "url": "./only07" },
+	{ "name": "only 8", "url": "./only08" },
+	{ "name": "only 9", "url": "./only09" },
+	{ "name": "only 10", "url": "./only10" }
+]

@@ -1,0 +1,4 @@
+[
+	{ "name": "multiplication", "url": "./multiplication" },
+	{ "name": "addition", "url": "./addition" }
+]
