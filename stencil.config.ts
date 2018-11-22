@@ -18,5 +18,6 @@ export const config: Config = {
 	},
 	copy: [
 		{ src: "api" },
+		{ src: "CNAME" },
 	],
 }
