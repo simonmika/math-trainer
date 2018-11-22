@@ -1,2 +1,2 @@
 export { Lesson } from "./Lesson"
-export { Task } from "./Task.s"
+export { Task } from "./Task"

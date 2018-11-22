@@ -1,6 +1,6 @@
+import { Named } from "./Named"
 import { Task } from "./Task"
 
-export interface Lesson {
-	name: string
+export interface Lesson extends Named {
 	tasks: Task[]
 }

@@ -1,14 +1,15 @@
-import { Component, State } from "@stencil/core"
+import { Component, Prop, State } from "@stencil/core"
 
 @Component({
-	tag: "mt-categories",
-	styleUrl: "mt-categories.css",
+	tag: "mt-category",
+	styleUrl: "mt-category.css",
 })
 export class MtCategories {
 	@State() state: { name: string, url: string }[] = []
+	@Prop() category: string | undefined
 
 	async componentWillLoad() {
-		const answer = await (await fetch(`/api/lessons/index.json`)).json() as { name: string, url: string }[] | undefined
+		const answer = await (await fetch(`/api/lessons/${this.category}/index.json`)).json() as { name: string, url: string }[] | undefined
 		if (answer)
 			this.state = answer
 	}
@@ -22,6 +23,7 @@ export class MtCategories {
 					<ion-title>Categories</ion-title>
 				</ion-toolbar>
 			</ion-header>,
+
 			<ion-content padding>
 				{
 					this.state.map(category =>

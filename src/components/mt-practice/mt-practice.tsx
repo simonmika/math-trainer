@@ -13,7 +13,7 @@ export class MtPractice {
 	toastController!: HTMLIonToastControllerElement
 
 	componentWillLoad() {
-		return this.lesson.load("/api/lessons/multiplication/full/index.json")
+		return this.lesson.load(`/api/lessons/${this.category}/${this.name}/index.json`)
 	}
 	@Listen("answered")
 	answeredHandler(event: CustomEvent<number>) {
@@ -40,19 +40,23 @@ export class MtPractice {
 		}
 	}
 	render() {
-		return this.lesson ? [
+		return [
 			<ion-header>
 				<ion-toolbar color="primary">
 					<ion-buttons slot="start">
 						<ion-back-button defaultHref="/" />
 					</ion-buttons>
-					<ion-title>{this.lesson.name}</ion-title>
+					<ion-title>{this.lesson ? this.lesson.name : "loading"}</ion-title>
 				</ion-toolbar>
 			</ion-header>,
 			<ion-content padding>
-				<mt-practice-task task={this.lesson.current.task}></mt-practice-task>
-				<ion-toast-controller ref={(element: HTMLElement | undefined) => this.toastController = element as HTMLIonToastControllerElement}></ion-toast-controller>,
+				{ (this.lesson) ? [
+				<mt-practice-task task={this.lesson.current.task}></mt-practice-task>,
+				<ion-toast-controller ref={(element: HTMLElement | undefined) => this.toastController = element as HTMLIonToastControllerElement}></ion-toast-controller>
+				] :
+				<ion-loading></ion-loading>
+				}
 			</ion-content>,
-		] : [ <ion-loading></ion-loading> ]
+		]
 	}
 }

@@ -37,8 +37,8 @@ export class AppRoot {
 				<ion-router useHash={false}>
 					<ion-route url="/" component="app-home" />
 					<ion-route url="/lessons/" component="mt-categories" />
+					<ion-route url="/lessons/:category" component="mt-category" />
 					<ion-route url="/lessons/:category/:name" component="mt-practice" />
-					<ion-route url="/profile/:name" component="app-profile" />
 				</ion-router>
 				<ion-nav />
 			</ion-app>

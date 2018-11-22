@@ -26,7 +26,7 @@ export class MtPracticeTask {
 	}
 	private renderTaskItem(item: string) {
 		switch (item) {
-			case "+": return <ion-label>&plus;</ion-label>
+			case "+": return <ion-label>+</ion-label>
 			case "-": return <ion-label>&minus;</ion-label>
 			case "*": return <ion-label>&times;</ion-label>
 			case "/": return <ion-label>&divide;</ion-label>

@@ -1,2 +1,5 @@
+export { Category } from "./Category"
 export { Lesson } from "./Lesson"
+export { Link } from "./Link"
+export { Named } from "./Named"
 export { Task } from "./Task"
