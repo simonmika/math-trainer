@@ -1,0 +1,14 @@
+{
+	"name": "Math Trainer",
+	"short_name": "Math Trainer",
+	"start_url": "/index.html",
+	"display": "standalone",
+	"icons": [{
+		"src": "assets/icon/icon.png",
+		"sizes": "512x512",
+		"type": "image/png"
+	}],
+	"scope": "/",
+	"background_color": "#488aff",
+	"theme_color": "#488aff"
+}

@@ -1,0 +1,2 @@
+/*! Built with http://stenciljs.com */
+const{h:e}=window.App;class n{render(){return[e("ion-header",null,e("ion-toolbar",{color:"primary"},e("ion-title",null,"Math Trainer"))),e("ion-content",{padding:!0},e("ion-button",{href:"/lessons",expand:"block"},"Lessons"))]}static get is(){return"app-home"}static get style(){return""}}export{n as AppHome};
